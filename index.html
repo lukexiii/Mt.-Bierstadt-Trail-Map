@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset=utf-8 />
+	<title>Map Template Browser Title</title>
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background: "whitesmoke";
+			font-family: "Noto Sans", sans-serif;
+			color: #3d3d3d;
+		}
+
+		h1 {
+			position: absolute;
+			margin-top: 0;
+			top: 10px;
+			left: 45px;
+			font-size: 2em;
+			font-family: "Lora", serif;
+			letter-spacing: .04em;
+			padding: 10px 15px;
+			background: rgba(256, 256, 256);
+			border: 1px solid grey;
+			border-radius: 3px;
+			z-index: 800;
+		}
+
+		h2 {
+			font-family: "Lora", serif;
+			letter-spacing: .04em;
+		}
+
+		#map {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+		}
+
+		section {
+			position: absolute;
+			bottom: 0;
+			left: 10px;
+			width: 280px;
+			margin: 20px auto;
+			padding: 0 15px;
+			background: rgba(256, 256, 256);
+			border: 1px solid grey;
+			border-radius: 3px;
+			z-index: 800;
+		}
+
+		p {
+			font-size: .9em;
+			line-height: 1.5em;
+		}
+
+		a {
+			color: #005daa;
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>Mt. Bierstadt via Guanella Pass</h1>
+
+	<div id='map'></div>
+
+	<section>
+		<h2>Mt. Bierstadt</h2>
+
+		<p>Mt. Bierstadt is one of Colorado's 53 official 14ers (mountains over with a summit elevation over 14,000 feet). It is located in the Front Range and is one of the closest 14ers to Denver, next to Mt. Blue Sky, which it is connected to via the Sawtooth Ridge.
+		</p>
+
+		<p>Mt. Bierstadt is widely considered one of the easier 14ers to summit, but it is still a difficult, demanding hike that is over 7 miles long ith almost 3,000 feet of elevation gain.
+		</p>
+
+		<p>Text provided by <a href="https://www.bobrosslipsum.com">Bob Ross quotes</a></p>
+		<p>Map authored by me, my name goes here</p>
+
+	</section>
+
+	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+
+<script src="data/route2.js"></script>
+
+<script>
+
+//options to be used when creating the map
+		var options = {
+			center: [36.08403, -81.83015],
+			zoom: 16
+		}
+
+//creation of the Leaflet map
+		var map = L.map('map', options);
+
+//request to load basemap
+var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community; Map Author: Luke Phelps'
+}).addTo(map);
+
+
+/*
+
+//string content to be inserted into a tooltip
+		var message = 'Beacon Heights!';
+
+//create a Leaflet marker, centered on the map's center.
+		L.marker(map.getCenter())
+			.bindTooltip(message) //bind the tooltip and message to the marker
+			.addTo(map) // add the marker to the map`
+			.openTooltip(); // open the tooltip
+
+*/
+
+
+var myRoute = L.geoJson(data, {
+	filter : function(feature) {
+		if(feature.geometry.type =="LineString") { return feature; 
+		} 
+	},
+	style : function(feature)
+		{ return {
+			color: "blue",
+			weight: 6,
+			opacity: 0.2,
+			dashArray: "5, 5"     
+		}   
+	}   
+}).addTo(map); 
+
+map.fitBounds(myRoute.getBounds());
+
+var myStops=L.geoJson(data, {
+	filter:function(feature) {
+		if(feature.geometry.type == "Point"){
+			return feature;
+		}
+	},
+	onEachFeature: function(feature, layer){
+		layer.bindTooltip(feature.properties['name']);
+	}
+}).addTo(map);
+
+
+	</script>
+
+</body>
+
+</html>
