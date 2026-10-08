@@ -85,27 +85,28 @@
 	<section>
 		<h2>Mt. Bierstadt</h2>
 
-		<p>Mt. Bierstadt is one of Colorado's 53 official 14ers (mountains over with a summit elevation over 14,000 feet). It is located in the Front Range and is one of the closest 14ers to Denver, next to Mt. Blue Sky, which it is connected to via the Sawtooth Ridge.
+		<p>Mt. Bierstadt is one of Colorado's 53 official 14ers (mountains with a summit elevation over 14,000 feet). It is located in the Front Range and is one of the closest 14ers to Denver, next to Mt. Blue Sky, which it is connected to via the Sawtooth Ridge.
 		</p>
 
-		<p>Mt. Bierstadt is widely considered one of the easier 14ers to summit, but it is still a difficult, demanding hike that is over 7 miles long ith almost 3,000 feet of elevation gain.
+		<p>Mt. Bierstadt is widely considered one of the easier 14ers to summit, as it can be a great entry into the 14er hiking hobby. However, it is still a difficult and demanding hike that is over 7 miles long and has almost 3,000 feet of elevation gain. Near the summit, there is a ~400 ft. class 2/3 scramble, but it is well-marked with cairns and markings.
 		</p>
 
-		<p>Text provided by <a href="https://www.bobrosslipsum.com">Bob Ross quotes</a></p>
-		<p>Map authored by me, my name goes here</p>
+		<p>To download the rote and find more info, click here: <a href="https://www.alltrails.com/trail/us/colorado/mount-bierstadt-trail">Mt. Bierstadt - AllTrails</a></p>
+
+		<p>Map authored by: Luke Phelps</p>
 
 	</section>
 
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
 
-<script src="data/route2.js"></script>
+<script src="data/bierstadt.js"></script>
 
 <script>
 
 //options to be used when creating the map
 		var options = {
-			center: [36.08403, -81.83015],
+			center: [-105.69541,39.59287],
 			zoom: 16
 		}
 
@@ -139,10 +140,10 @@ var myRoute = L.geoJson(data, {
 	},
 	style : function(feature)
 		{ return {
-			color: "blue",
-			weight: 6,
-			opacity: 0.2,
-			dashArray: "5, 5"     
+			color: "navy",
+			weight: 8,
+			opacity: 0.5,
+			dashArray: "2, 2"     
 		}   
 	}   
 }).addTo(map); 
